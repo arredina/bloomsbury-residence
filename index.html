@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloomsbury Technology Residence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font-sans:  'Inter', 'Segoe UI', Helvetica, Arial, sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-mono:  'JetBrains Mono', 'Courier New', monospace;
+      --black:  #0a0a0a;
+      --white:  #ffffff;
+      --n900:   #171717;
+      --n800:   #262626;
+      --n700:   #404040;
+      --n600:   #525252;
+      --n500:   #737373;
+      --n400:   #a1a1a1;
+      --n300:   #d4d4d4;
+      --n200:   #e5e5e5;
+      --n100:   #f5f5f5;
+      --n50:    #fafafa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--white);
+      color: var(--black);
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--black); color: var(--white); }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--n200);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--n600);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    /* ── Container ── */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 128px 48px 80px;
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--n400);
+      margin-bottom: 28px;
+    }
+    .hero-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(72px, 10vw, 144px);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--black);
+      margin-bottom: 32px;
+    }
+    .hero-headline em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--n500);
+    }
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--n600);
+      max-width: 520px;
+      margin-bottom: 12px;
+    }
+    .hero-transfer {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--n400);
+      margin-bottom: 36px;
+    }
+    .hero-cta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--black);
+      padding-bottom: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.15s;
+    }
+    .hero-cta:hover { opacity: 0.6; }
+    .hero-bg {
+      position: absolute;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 640px;
+      height: 640px;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 48px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--n400);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .scroll-line { width: 40px; height: 1px; background: var(--n300); }
+
+    /* ── Swiper Photo Carousel ── */
+    .photo-carousel {
+      width: 100%;
+      height: 72vh;
+      min-height: 480px;
+      max-height: 760px;
+      position: relative;
+      overflow: hidden;
+      background: var(--n100);
+    }
+    .photo-carousel .swiper { width: 100%; height: 100%; }
+    .photo-carousel .swiper-slide img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .photo-caption {
+      position: absolute;
+      bottom: 32px; left: 48px;
+      z-index: 10;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+    }
+    .photo-carousel .swiper-pagination { bottom: 32px; right: 48px; left: auto; width: auto; }
+    .photo-carousel .swiper-pagination-bullet { width: 4px; height: 4px; background: rgba(255,255,255,0.5); opacity: 1; }
+    .photo-carousel .swiper-pagination-bullet-active { background: #fff; width: 24px; border-radius: 2px; }
+
+    /* ── Divider ── */
+    .divider { border: none; border-top: 1px solid var(--n200); }
+
+    /* ── About ── */
+    .about { padding: 96px 0; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 3fr 9fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--n400);
+      padding-top: 6px;
+    }
+    .about-body {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 300;
+      line-height: 1.3;
+      color: var(--black);
+      letter-spacing: -0.015em;
+    }
+    .about-body strong { font-weight: 600; }
+
+    /* ── Where staying ── */
+    .staying { padding: 96px 0; }
+    .staying-header {
+      display: grid;
+      grid-template-columns: 3fr 9fr;
+      gap: 64px;
+      align-items: end;
+      margin-bottom: 40px;
+    }
+    .staying-title {
+      font-family: var(--font-serif);
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+    .staying-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--n600);
+      line-height: 1.6;
+      max-width: 480px;
+      margin-top: 12px;
+    }
+    .staying-link {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--black);
+      padding-bottom: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      transition: opacity 0.15s;
+    }
+    .staying-link:hover { opacity: 0.6; }
+
+    /* Airbnb photo grid */
+    .staying-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 340px 240px;
+      gap: 4px;
+    }
+    .staying-grid-item { overflow: hidden; background: var(--n100); }
+    .staying-grid-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .staying-grid-item:hover img { transform: scale(1.03); }
+    .staying-grid-item:nth-child(1) { grid-column: 1 / 7; grid-row: 1; }
+    .staying-grid-item:nth-child(2) { grid-column: 7 / 13; grid-row: 1; }
+    .staying-grid-item:nth-child(3) { grid-column: 1 / 4; grid-row: 2; }
+    .staying-grid-item:nth-child(4) { grid-column: 4 / 8; grid-row: 2; }
+    .staying-grid-item:nth-child(5) { grid-column: 8 / 13; grid-row: 2; }
+
+    /* ── Offering ── */
+    .offering { padding: 96px 0; }
+    .offering-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 64px;
+    }
+    .offering-title {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 4.5vw, 60px);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+    .offering-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--n200);
+      border: 1px solid var(--n200);
+    }
+    .offering-card {
+      background: var(--white);
+      padding: 40px;
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .offering-card:hover { background: var(--n50); }
+    .offering-icon { font-size: 24px; color: var(--n300); margin-bottom: 20px; transition: color 0.2s; line-height: 1; }
+    .offering-card:hover .offering-icon { color: var(--black); }
+    .offering-card h3 { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 10px; color: var(--black); }
+    .offering-card p { font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--n500); }
+    .offering-card-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--n400); margin-bottom: 16px; }
+
+    /* ── Team ── */
+    .team { padding: 96px 0; }
+    .team-header {
+      display: grid;
+      grid-template-columns: 3fr 9fr;
+      gap: 64px;
+      align-items: start;
+      margin-bottom: 64px;
+    }
+    .team-members {
+      display: flex;
+      gap: 80px;
+      align-items: flex-start;
+    }
+    .team-member {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0;
+    }
+    .team-photo-wrap {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--n100);
+      margin-bottom: 24px;
+      flex-shrink: 0;
+    }
+    .team-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(1);
+      display: block;
+      transition: filter 0.3s;
+    }
+    .team-member:hover .team-photo-wrap img { filter: grayscale(0.4); }
+    .team-photo-placeholder {
+      width: 100%;
+      height: 100%;
+      background: var(--n900);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--n500);
+      letter-spacing: -0.02em;
+    }
+    .team-name {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .team-role {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--n500);
+      line-height: 1.4;
+    }
+
+    /* ── Location ── */
+    .location { padding: 96px 0; }
+    .location-grid { display: grid; grid-template-columns: 3fr 9fr; gap: 64px; align-items: start; }
+    .location-detail { display: flex; flex-direction: column; gap: 32px; }
+    .location-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(32px, 3.5vw, 52px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+    .location-headline em { font-style: italic; color: var(--n500); }
+    .location-body { font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--n600); max-width: 480px; }
+    .location-transfer {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--n400);
+      padding: 12px 16px;
+      border: 1px solid var(--n200);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .location-stats { display: flex; gap: 48px; }
+    .stat-num { font-family: var(--font-serif); font-size: 42px; font-weight: 300; letter-spacing: -0.02em; line-height: 1; }
+    .stat-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--n400); margin-top: 6px; }
+
+    /* ── Apply strip ── */
+    .apply-strip { padding: 64px 0; border-top: 1px solid var(--n200); border-bottom: 1px solid var(--n200); }
+    .apply-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+    .apply-text { font-family: var(--font-serif); font-size: clamp(26px, 3vw, 40px); font-weight: 300; letter-spacing: -0.01em; line-height: 1.2; }
+    .btn-primary {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--white);
+      border: 1px solid var(--black);
+      padding: 14px 28px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { background: var(--black); color: var(--white); }
+
+    /* ── Footer (bloomsburytech.com style) ── */
+    footer {
+      background: var(--n900);
+      color: var(--white);
+      padding: 0;
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 80px;
+      align-items: end;
+      padding: 96px 0 64px;
+    }
+    .footer-left {}
+    .footer-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: -0.01em;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 40px;
+    }
+    .footer-email-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--font-sans);
+      font-size: clamp(14px, 1.5vw, 20px);
+      font-weight: 300;
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid var(--n700);
+      padding-bottom: 8px;
+      transition: border-color 0.2s;
+      max-width: 600px;
+      width: 100%;
+    }
+    .footer-email-link:hover { border-color: var(--white); }
+    .footer-email-link svg { flex-shrink: 0; opacity: 0.6; }
+    .footer-right {
+      display: flex;
+      gap: 64px;
+      padding-bottom: 8px;
+    }
+    .footer-col-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--n500);
+      margin-bottom: 20px;
+    }
+    .footer-col-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-col-links a,
+    .footer-col-links span {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--n400);
+      text-decoration: none;
+      transition: color 0.15s;
+      letter-spacing: 0.01em;
+      cursor: default;
+    }
+    .footer-col-links a:hover { color: var(--white); cursor: pointer; }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid var(--n800);
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--n600);
+    }
+    .footer-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--n600);
+    }
+
+    /* ── Fade-in ── */
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      .footer-main { grid-template-columns: 1fr; gap: 48px; padding: 64px 0 48px; }
+      .footer-right { gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .nav-inner { padding: 18px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 64px; }
+      .hero-bg { display: none; }
+      .container { padding: 0 24px; }
+      .about-grid, .location-grid, .staying-header, .team-header { grid-template-columns: 1fr; gap: 24px; }
+      .offering-grid { grid-template-columns: 1fr; }
+      .staying-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .staying-grid-item { grid-column: auto !important; grid-row: auto !important; height: 220px; }
+      .staying-grid-item:nth-child(1) { grid-column: 1 / 3 !important; }
+      .team-members { flex-wrap: wrap; justify-content: center; gap: 48px; }
+      .footer-inner { padding: 0 24px; }
+      .footer-main { padding: 48px 0 40px; }
+      .footer-right { flex-wrap: wrap; }
+      .apply-inner { flex-direction: column; align-items: flex-start; }
+      .footer-bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .scroll-indicator { display: none; }
+      .photo-caption { left: 24px; }
+      .photo-carousel .swiper-pagination { right: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">Bloomsbury Technology Residence</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#staying">Accommodation</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#location">Location</a></li>
+        <li><a href="#apply">Apply</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section style="position:relative; overflow:hidden;">
+    <div class="hero">
+      <svg class="hero-bg" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="300" cy="300" r="299" stroke="currentColor" stroke-width="1"/>
+        <circle cx="300" cy="300" r="220" stroke="currentColor" stroke-width="1"/>
+        <circle cx="300" cy="300" r="150" stroke="currentColor" stroke-width="1"/>
+        <circle cx="300" cy="300" r="80" stroke="currentColor" stroke-width="1"/>
+        <line x1="300" y1="0" x2="300" y2="600" stroke="currentColor" stroke-width="0.5"/>
+        <line x1="0" y1="300" x2="600" y2="300" stroke="currentColor" stroke-width="0.5"/>
+        <line x1="88" y1="88" x2="512" y2="512" stroke="currentColor" stroke-width="0.5"/>
+        <line x1="512" y1="88" x2="88" y2="512" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="300" cy="300" r="4" fill="currentColor"/>
+        <circle cx="300" cy="80" r="3" fill="currentColor"/>
+        <circle cx="300" cy="520" r="3" fill="currentColor"/>
+        <circle cx="80" cy="300" r="3" fill="currentColor"/>
+        <circle cx="520" cy="300" r="3" fill="currentColor"/>
+      </svg>
+      <p class="hero-eyebrow fade-up">Morocco, Atlas Mountains · 11–19 April 2026</p>
+      <h1 class="hero-headline fade-up" style="transition-delay:0.08s">
+        Bloomsbury<br/>
+        Technology<br/>
+        <em>Residence</em>
+      </h1>
+      <p class="hero-sub fade-up" style="transition-delay:0.16s">
+        A curated residential programme for technology founders, researchers, and builders — set against the High Atlas in Morocco.
+      </p>
+      <p class="hero-transfer fade-up" style="transition-delay:0.20s">✦ Transfer from Marrakesh included &nbsp;·&nbsp; 11–19 April 2026</p>
+      <a href="#about" class="hero-cta fade-up" style="transition-delay:0.28s">
+        Discover the Residence
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="scroll-indicator">
+        <span class="scroll-line"></span>Scroll
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Photo Carousel — Oussertek & Atlas Mountains ── -->
+  <div class="photo-carousel">
+    <div class="swiper js-photos">
+      <div class="swiper-wrapper">
+        <!-- #1 — Oussertek village on the mountainside -->
+        <div class="swiper-slide">
+          <img src="oussertek-village.png" alt="Oussertek village, High Atlas" />
+        </div>
+        <!-- #2 — Terrace with mountain view (swapped) -->
+        <div class="swiper-slide">
+          <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1647395651174701613/original/589caa99-f3fd-4ff4-9741-fa165e339370.jpeg" alt="Villagio Amazigh dell'Atlante — terrace" loading="lazy" />
+        </div>
+        <!-- #3 — Dining room (swapped) -->
+        <div class="swiper-slide">
+          <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1647395651174701613/original/2507b05c-959f-4619-b90d-ab7d9c0ea152.jpeg" alt="High Atlas Organic House — dining room" loading="lazy" />
+        </div>
+        <!-- #4 — Airbnb photo 8 -->
+        <div class="swiper-slide">
+          <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1647395651174701613/original/9cfead76-f538-4668-ad21-3f94620ac6fa.jpeg" alt="Villagio Amazigh dell'Atlante" loading="lazy" />
+        </div>
+        <!-- #5 — Airbnb photo 13 -->
+        <div class="swiper-slide">
+          <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1647395651174701613/original/7d2286cb-1911-473c-b89f-498c20ecaf4f.jpeg" alt="High Atlas Organic House" loading="lazy" />
+        </div>
+        <!-- #6 — Interior -->
+        <div class="swiper-slide">
+          <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1647395651174701613/original/88b73384-9c2b-495a-8a2c-5a1178ec471b.jpeg" alt="High Atlas Organic House interior" loading="lazy" />
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <div class="photo-caption">Oussertek, High Atlas · Morocco</div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ── About ── -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="section-label">About</div>
+        <div>
+          <p class="about-body fade-up">
+            We are building a <strong>dedicated technology residence</strong> in the High Atlas — a place where ambitious builders live, think, and create alongside each other, removed from distraction, surrounded by silence and altitude.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── Where will we be staying ── -->
+  <section class="staying" id="staying">
+    <div class="container">
+      <div class="staying-header">
+        <div class="section-label">Accommodation</div>
+        <div>
+          <h2 class="staying-title fade-up">Where will we<br/>be staying</h2>
+          <p class="staying-sub fade-up" style="transition-delay:0.08s">
+            High Atlas Organic House — an authentic Berber guesthouse renovated in the Western High Atlas, near Toubkal. Sleeping up to 20, it offers walking trails, total quiet, and views over the valley.
+          </p>
+        </div>
+      </div>
+
+      <!-- 7-photo grid — all real Oussertek property photos, bedroom excluded -->
+      <div class="staying-grid fade-up">
+        <div class="staying-grid-item">
+          <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1647395651174701613/original/589caa99-f3fd-4ff4-9741-fa165e339370.jpeg" alt="Terrace with Atlas Mountains view" loading="lazy" />
+        </div>
+        <div class="staying-grid-item">
+          <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1647395651174701613/original/88b73384-9c2b-495a-8a2c-5a1178ec471b.jpeg" alt="Interior space" loading="lazy" />
+        </div>
+        <div class="staying-grid-item">
+          <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1647395651174701613/original/359cd710-1341-4d1d-b9e0-63ff0a18d5e8.jpeg" alt="Common room" loading="lazy" />
+        </div>
+        <div class="staying-grid-item">
+          <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1647395651174701613/original/9cfead76-f538-4668-ad21-3f94620ac6fa.jpeg" alt="Villagio Amazigh dell'Atlante" loading="lazy" />
+        </div>
+        <div class="staying-grid-item">
+          <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1647395651174701613/original/6c968261-8db8-4e04-9a0f-57526239b628.jpeg" alt="High Atlas Organic House" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── Offering ── -->
+  <section class="offering" id="residency">
+    <div class="container">
+      <div class="offering-header">
+        <h2 class="offering-title fade-up">What the<br/>Residence Offers</h2>
+        <span class="section-label" style="padding-bottom:6px">Four pillars</span>
+      </div>
+      <div class="offering-grid fade-up">
+        <div class="offering-card">
+          <div class="offering-card-label">01 — Community</div>
+          <div class="offering-icon">◈</div>
+          <h3>Curated Cohorts</h3>
+          <p>Each intake is handpicked: founders, researchers, and engineers whose work creates genuine intellectual surface area between them.</p>
+        </div>
+        <div class="offering-card">
+          <div class="offering-card-label">02 — Programme</div>
+          <div class="offering-icon">◈</div>
+          <h3>Events & Salons</h3>
+          <p>Morning seminars, expert talks, and closed-door workshops — drawing from global technology, academic, and investment ecosystems.</p>
+        </div>
+        <div class="offering-card">
+          <div class="offering-card-label">03 — Network</div>
+          <div class="offering-icon">◈</div>
+          <h3>Investor Access</h3>
+          <p>Structured introductions to leading European and global investors, through a network built across a decade of technology investment.</p>
+        </div>
+        <div class="offering-card">
+          <div class="offering-card-label">04 — Support</div>
+          <div class="offering-icon">◈</div>
+          <h3>Residency Services</h3>
+          <p>Transfer from Marrakesh, concierge, visa support, and a dedicated residence team — so you can focus entirely on building.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── The Team ── -->
+  <section class="team" id="team">
+    <div class="container">
+      <div class="team-header">
+        <div class="section-label">Team</div>
+        <div>
+          <h2 class="offering-title fade-up" style="margin-bottom:0">The team</h2>
+        </div>
+      </div>
+      <div class="team-members">
+
+        <div class="team-member fade-up">
+          <div class="team-photo-wrap">
+            <!-- Replace src with Eugene's actual photo URL if available -->
+            <div class="team-photo-placeholder">E</div>
+          </div>
+          <div class="team-name">Eugene<br/>Shcherbinin</div>
+          <div class="team-role">Founder · CEO<br/>Bloomsbury Technology</div>
+        </div>
+
+        <div class="team-member fade-up" style="transition-delay:0.1s">
+          <div class="team-photo-wrap">
+            <img src="arina-redina.jpg" alt="Arina Redina" />
+          </div>
+          <div class="team-name">Arina<br/>Redina</div>
+          <div class="team-role">Co-organiser<br/>Bloomsbury Residence</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── Location ── -->
+  <section class="location" id="location">
+    <div class="container">
+      <div class="location-grid">
+        <div class="section-label">Location</div>
+        <div>
+          <div class="location-detail">
+            <h2 class="location-headline fade-up">
+              Morocco,<br/><em>Atlas Mountains.</em>
+            </h2>
+            <p class="location-body fade-up" style="transition-delay:0.08s">
+              Oussertek sits in the Asni valley, 60 kilometres south of Marrakesh, at the foot of Jbel Toubkal — North Africa's highest peak. The altitude clears the noise. The landscape recalibrates the mind. Transfer from Marrakesh Menara Airport is included for all residents.
+            </p>
+            <div class="location-transfer fade-up" style="transition-delay:0.12s">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Transfer from Marrakesh included · 60 km south
+            </div>
+            <div class="location-stats fade-up" style="transition-delay:0.16s">
+              <div>
+                <div class="stat-num">1,800</div>
+                <div class="stat-label">Metres altitude</div>
+              </div>
+              <div>
+                <div class="stat-num">4,167</div>
+                <div class="stat-label">Toubkal summit</div>
+              </div>
+              <div>
+                <div class="stat-num">60km</div>
+                <div class="stat-label">From Marrakesh</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── Apply strip ── -->
+  <section class="apply-strip" id="apply">
+    <div class="container">
+      <div class="apply-inner">
+        <p class="apply-text fade-up">
+          Applications open<br/>for the 2026 cohort.
+        </p>
+        <p class="fade-up" style="font-family:var(--font-mono);font-size:13px;letter-spacing:0.1em;color:var(--n600);margin-top:12px;">Cost €450</p>
+        <a href="mailto:eugene.shcherbinin@bloomsburytech.com" class="btn-primary fade-up" style="transition-delay:0.08s">
+          Apply for Residency
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1.5 6h9M7 2.5l3.5 3.5L7 9.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-main">
+        <div class="footer-left">
+          <h2 class="footer-headline">
+            Where inventors<br/>come to summit.
+          </h2>
+          <a href="mailto:eugene.shcherbinin@bloomsburytech.com" class="footer-email-link">
+            eugene.shcherbinin@bloomsburytech.com
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M3 10h14M13 5l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        <div class="footer-right">
+          <div>
+            <div class="footer-col-label">Location</div>
+            <div class="footer-col-links">
+              <span>Oussertek, Morocco</span>
+              <span>Atlas Mountains</span>
+              <span>London, UK</span>
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-label">Connect</div>
+            <div class="footer-col-links">
+              <a href="https://www.linkedin.com/company/bloomsbury-technology/" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://www.bloomsburytech.com/expertise" target="_blank" rel="noopener">Expertise</a>
+              <a href="https://www.bloomsburytech.com/work" target="_blank" rel="noopener">Work</a>
+              <a href="https://www.bloomsburytech.com/" target="_blank" rel="noopener">Bloomsbury Tech</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="footer-divider" />
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Bloomsbury Technology Residence. All rights reserved.</span>
+        <span class="footer-tag">Pre-Seed · Confidential</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    new Swiper('.js-photos', {
+      effect: 'fade',
+      fadeEffect: { crossFade: true },
+      loop: true,
+      autoplay: { delay: 4000, disableOnInteraction: false },
+      speed: 1200,
+      pagination: { el: '.swiper-pagination', clickable: true },
+    })
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target) }
+      })
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el))
+    setTimeout(() => {
+      document.querySelectorAll('.hero .fade-up').forEach(el => el.classList.add('visible'))
+    }, 80)
+  </script>
+
+</body>
+</html>
